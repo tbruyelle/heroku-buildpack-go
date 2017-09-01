@@ -55,8 +55,9 @@ cache=$(cd "$2/" && pwd)
 echo "build=$build CACHE=$cache"
 echo "LS1 $(ls $build)"
 echo "PWD $(pwd)"
-mv "$build/*" "$cache/src/nirvana"
-mv "$cache/src" "$build"
+cd $build
+mv * "$cache/src/nirvana"
+mv "$cache/src" . 
 echo "LS1 $(ls $build)"
 echo "LS2 $(ls $build/src)"
 env_dir="$3"
