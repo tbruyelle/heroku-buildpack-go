@@ -100,18 +100,17 @@ fi
 
 GOROOT=$cache/$ver/go export GOROOT
 PATH=$GOROOT/bin:$PATH
-GOPATH="$build"
 
 # Build the project
 unset GIT_DIR # unset git dir or it will mess with goinstall
 cd $build/src/nirvana
 echo "-----> Running: make"
-make install | indent
+GOPATH="$build" make install | indent
 
 # Install goose to perform db migration
 echo "-----> Installing vendored goose"
 cd "$build/src/nirvana/vendor/bitbucket.org/liamstask/goose/cmd/goose"
-go install . | indent
+GOPATH="$build" go install . | indent
 
 echo "-----> Running: goose"
 $build/bin/goose -env production up
