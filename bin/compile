@@ -54,6 +54,8 @@ cache=$(cd "$2/" && pwd)
 echo -n "build=$build CACHE=$cache"
 mv "$build/*" "$cache/src/nirvana"
 mv "$cache/src" "$build"
+echo -n "LS1 $(ls $build)"
+echo -n "LS2 $(ls $build/src)"
 env_dir="$3"
 buildpack=$(cd "$(dirname ${BASH_SOURCE[0]})/.." && pwd)
 arch=$(uname -m|tr A-Z a-z)
