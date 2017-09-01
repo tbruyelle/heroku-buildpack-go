@@ -1,6 +1,7 @@
 #!/bin/bash
 # usage: bin/compile <build-dir> <cache-dir> <env-dir>
 
+set -x
 set -eo pipefail
 
 # Go releases for Darwin beginning with 1.2rc1
