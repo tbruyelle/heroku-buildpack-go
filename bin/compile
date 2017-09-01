@@ -54,6 +54,7 @@ cache=$(cd "$2/" && pwd)
 cd $build
 mv * "$cache/src/nirvana/"
 mv "$cache/src" . 
+mv src/nirvana/Procfile .
 env_dir="$3"
 buildpack=$(cd "$(dirname ${BASH_SOURCE[0]})/.." && pwd)
 arch=$(uname -m|tr A-Z a-z)
