@@ -112,9 +112,5 @@ echo "-----> Installing vendored goose"
 cd "$build/src/nirvana/vendor/bitbucket.org/liamstask/goose/cmd/goose"
 GOPATH="$build" go install . | indent
 
-echo "-----> Running: goose"
-cd "$build/src/nirvana"
-$build/bin/goose -env production up
-
 mkdir -p $build/.profile.d
 echo 'PATH=$PATH:$HOME/bin' > $build/.profile.d/go.sh
