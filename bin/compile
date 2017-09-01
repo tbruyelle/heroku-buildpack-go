@@ -105,7 +105,7 @@ PATH=$GOROOT/bin:$PATH
 unset GIT_DIR # unset git dir or it will mess with goinstall
 cd $build/src/nirvana
 echo "-----> Running: make"
-GOPATH="$build/src" make
+GOPATH="$build" make
 
 # Install goose to perform db migration
 echo "-----> Installing vendored goose"
