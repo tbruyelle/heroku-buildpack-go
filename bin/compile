@@ -48,11 +48,12 @@ indent() {
   esac
 }
 
-mkdir -p src/nirvana "$1" "$2"
-echo -n "VAR=$1"
-mv "$1/*" src/nirvana/
-build=$(cd "src/nirvana/" && pwd)
+mkdir -p "$1" "$2/src/nirvana"
+build=$(cd "$1" && pwd)
 cache=$(cd "$2/" && pwd)
+echo -n "build=$build CACHE=$cache"
+mv "$build/*" "$cache/src/nirvana"
+mv "$cache/src" "$build"
 env_dir="$3"
 buildpack=$(cd "$(dirname ${BASH_SOURCE[0]})/.." && pwd)
 arch=$(uname -m|tr A-Z a-z)
@@ -104,15 +105,15 @@ PATH=$GOROOT/bin:$PATH
 unset GIT_DIR # unset git dir or it will mess with goinstall
 cd $build
 echo "-----> Running: make"
-GOPATH="." make
+GOPATH="$build/src" make
 
 # Install goose to perform db migration
 echo "-----> Installing vendored goose"
-GOPATH="$build/vendor" go get bitbucket.org/liamstask/goose/cmd/goose 2>&1 | indent
+GOPATH="$build/src/nirvana/vendor" go get bitbucket.org/liamstask/goose/cmd/goose 2>&1 | indent
 mv vendor/bin/goose $build/bin
 
 echo "-----> Running: goose"
-./bin/goose -env production up
+$build/src/nirvana/bin/goose -env production up
 
 mkdir -p $build/.profile.d
 echo 'PATH=$PATH:$HOME/bin' > $build/.profile.d/go.sh
