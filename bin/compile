@@ -1,7 +1,6 @@
 #!/bin/bash
 # usage: bin/compile <build-dir> <cache-dir> <env-dir>
 
-set -x
 set -eo pipefail
 
 # Go releases for Darwin beginning with 1.2rc1
@@ -59,7 +58,7 @@ cd $build
 mv * "$cache/src/nirvana"
 mv "$cache/src" . 
 echo "LS1 $(ls $build)"
-echo "LS2 $(ls $build/src)"
+echo "LS2 $(ls $build/src/nirvana)"
 env_dir="$3"
 buildpack=$(cd "$(dirname ${BASH_SOURCE[0]})/.." && pwd)
 arch=$(uname -m|tr A-Z a-z)
@@ -109,7 +108,7 @@ PATH=$GOROOT/bin:$PATH
 
 # Build the project
 unset GIT_DIR # unset git dir or it will mess with goinstall
-cd $build
+cd $build/src/nirvana
 echo "-----> Running: make"
 GOPATH="$build/src" make
 
