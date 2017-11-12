@@ -56,7 +56,6 @@ mv * "$cache/src/nirvana/"
 mv "$cache/src" . 
 mv src/nirvana/Procfile .
 mv src/nirvana/templates .
-mv src/nirvana/static .
 env_dir="$3"
 buildpack=$(cd "$(dirname ${BASH_SOURCE[0]})/.." && pwd)
 arch=$(uname -m|tr A-Z a-z)
@@ -102,13 +101,23 @@ else
 fi
 
 GOROOT=$cache/$ver/go export GOROOT
-PATH=$GOROOT/bin:$PATH
+PATH=$GOROOT/bin:$build/bin:$PATH
+
+# get dependencoes
+echo "----> Get and install GopherJS"
+GOPATH="$build" go get github.com/gopherjs/gopherjs
+GOPATH="$build" go get github.com/gopherjs/vecty
+GOPATH="$build" go get honnef.co/go/js/xhr
+GOPATH="$build" go get honnef.co/go/js/dom
+GOPATH="$build" go get github.com/cathalgarvey/fmtless
 
 # Build the project
 unset GIT_DIR # unset git dir or it will mess with goinstall
 cd $build/src/nirvana
 echo "-----> Running: make"
 GOPATH="$build" make install | indent
+
+mv $build/src/nirvana/static $build/
 
 # Install goose to perform db migration
 echo "-----> Installing vendored goose"
