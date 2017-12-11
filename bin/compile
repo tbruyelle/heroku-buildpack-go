@@ -105,6 +105,7 @@ PATH=$GOROOT/bin:$build/bin:$PATH
 
 # get dependencoes
 echo "----> Get and install GopherJS"
+cd $build/src/nirvana
 GOPATH="$build" front/install.sh
 
 # Build the project
