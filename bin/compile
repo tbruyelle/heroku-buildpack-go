@@ -118,7 +118,7 @@ mv $build/src/nirvana/static $build/
 
 # Install goose to perform db migration
 echo "-----> Installing vendored goose"
-cd "$build/src/nirvana/vendor/bitbucket.org/liamstask/goose/cmd/goose"
+cd "$build/src/nirvana/vendor/github.com/tbruyelle/goose/cmd/goose"
 GOPATH="$build" go install . | indent
 
 mkdir -p $build/.profile.d
